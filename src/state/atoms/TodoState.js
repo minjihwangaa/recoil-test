@@ -11,11 +11,11 @@ export const countState = atom({
 });
 
 export const currentUserState = atom({
-  key: "currentUser",
+  key: "currentUserState",
   default: [],
 });
 
 export const userIdState = atom({
-  key: "userState",
+  key: "userIdState",
   default: 1,
 });

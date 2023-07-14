@@ -5,14 +5,16 @@ import {
   countNum,
   fetchUserDetails,
   fetchUserDetailsSF,
+  postUserDetailsSF,
   totalTodos,
 } from "./state/selectors/TotalTodos";
 import { useState } from "react";
 
-const UserInfo = (selectNum) => {
+const UserInfoGetParameter = (selectNum) => {
   const userLoadable = useRecoilValueLoadable(
     fetchUserDetailsSF(selectNum.num)
   ); // parameter + 비동기
+
   switch (userLoadable.state) {
     case "hasValue":
       return (
@@ -20,6 +22,29 @@ const UserInfo = (selectNum) => {
           {userLoadable.contents
             ? userLoadable?.contents?.data.title
             : "숫자를 클릭해주세요"}
+        </div>
+      );
+    case "loading":
+      return <div>Loading..</div>;
+    case "hasError":
+      return <div style={{ color: "red" }}>Error..</div>;
+  }
+};
+
+const PostInfoParameter = () => {
+  const param = {
+    id: 101,
+    title: "BMW Pencil",
+  };
+  const userLoadable = useRecoilValueLoadable(postUserDetailsSF(param)); // parameter + 비동기
+  console.log(userLoadable, "?");
+  switch (userLoadable.state) {
+    case "hasValue":
+      return (
+        <div>
+          {userLoadable.contents
+            ? userLoadable?.contents?.data.title
+            : "값이 들어오지않음"}
         </div>
       );
     case "loading":
@@ -61,7 +86,8 @@ function App() {
           </span>
         ))}
       </div>
-      <UserInfo num={selectNum} />
+      <UserInfoGetParameter num={selectNum} />
+      <PostInfoParameter />
     </div>
   );
 }

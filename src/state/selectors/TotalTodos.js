@@ -47,8 +47,18 @@ export const fetchUserDetailsSF = selectorFamily({
       return;
     }
     const response = await axios.get(common.jsonDummy + "products/" + userId);
-    const { data } = response;
-    console.log(userId, data);
+    return response;
+  },
+});
+
+export const postUserDetailsSF = selectorFamily({
+  key: "userDetailsSelector",
+  get: (param) => async () => {
+    // post the asyncronous data with parameter
+    if (!param) {
+      return;
+    }
+    const response = await axios.post(common.jsonDummy + "products/add", param);
     return response;
   },
 });
